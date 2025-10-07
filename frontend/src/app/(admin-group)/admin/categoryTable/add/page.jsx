@@ -1,6 +1,6 @@
 
 'use client'
-import { createSlug, notify } from '@/library/helper';
+import { createSlug, notify, axiosInstance  } from '@/library/helper';
 import axios from 'axios';
 
 import React, { useRef } from 'react'
@@ -26,7 +26,7 @@ export default function page() {
         formData.append("slug", slugRef.current.value)
         formData.append("image", e.target.category_image.files[0])
 
-        axios.post("http://localhost:5000/category/create", formData).then(
+        axiosInstance.post("category/create", formData).then(
             (response)=> {
                 // console.log(response.data.success);
                 notify(response.data.message, {flag: response.data.success})

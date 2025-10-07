@@ -1,10 +1,13 @@
 // components/CategoryTable.jsx
 import { getCategories } from '@/library/api-calls';
+import { axiosInstance } from '@/library/helper';
 import Link from 'next/link';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 
 export default async function CategoryTable() {
     const categories = await getCategories()
+    console.log(categories);
+    
 
 
 
@@ -38,7 +41,7 @@ export default async function CategoryTable() {
                             <tr key={cat.id} className="border-b hover:bg-gray-50">
                                 <td className="px-4 py-3">
                                     <img
-                                        src={`http://localhost:5000/images/category/${cat.image}`}
+                                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.image}`}
                                         alt={cat.name}
                                         className="w-12 h-12 object-cover rounded"
                                     />
