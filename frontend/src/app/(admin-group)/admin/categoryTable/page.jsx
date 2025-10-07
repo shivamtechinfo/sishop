@@ -38,7 +38,7 @@ export default async function CategoryTable() {
                             <tr key={cat.id} className="border-b hover:bg-gray-50">
                                 <td className="px-4 py-3">
                                     <img
-                                        src={cat.image}
+                                        src={`http://localhost:5000/images/category/${cat.image}`}
                                         alt={cat.name}
                                         className="w-12 h-12 object-cover rounded"
                                     />

@@ -1,6 +1,6 @@
 const categoryModel = require('../model/category.model')
 const { noContentResponse, createdResponse, serverErrorResponse, errorResponse, successResponse } = require('../utility/response')
-const  {createUniqueName} = require('../utility/helper') 
+const { createUniqueName } = require('../utility/helper')
 
 const category = {
     async create(req, res) {
@@ -23,20 +23,19 @@ const category = {
             }
 
             const image = createUniqueName(categoryImg.name)
-         
 
             const destination = 'public/images/category/' + image
 
             categoryImg.mv(
                 destination,
-             async   (error) => {
+                async (error) => {
                     if (error) {
                         return errorResponse(res, "File not found")
                     } else {
                         const category = await categoryModel.create({
                             name,
                             slug,
-                            image: name
+                            image
                         })
 
                         await category.save()
