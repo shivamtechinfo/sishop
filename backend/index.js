@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -12,7 +13,7 @@ server.listen(
     5000, 
     ()=> {
         console.log('Server Running PORT 5000');
-        mongoose.connect("mongodb://localhost:27017/", {dbName: "rishop"}).then(
+        mongoose.connect(process.env.DATABASE_URL, {dbName: "rishop"}).then(
             ()=> {
                 console.log("Database Connected");
             }
