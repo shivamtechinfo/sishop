@@ -1,5 +1,6 @@
 const categoryModel = require('../model/category.model')
 const { noContentResponse, createdResponse, serverErrorResponse, errorResponse, successResponse } = require('../utility/response')
+const  {createUniqueName} = require('../utility/helper') 
 
 const category = {
     async create(req, res) {
@@ -21,7 +22,10 @@ const category = {
                 return serverErrorResponse(res, "Category already created", 409)
             }
 
-            const destination = 'public/images/category/' + categoryImg.name  
+            const image = createUniqueName(categoryImg.name)
+         
+
+            const destination = 'public/images/category/' + image
 
             categoryImg.mv(
                 destination,
@@ -32,7 +36,7 @@ const category = {
                         const category = await categoryModel.create({
                             name,
                             slug,
-                            image: categoryImg.name
+                            image: name
                         })
 
                         await category.save()
