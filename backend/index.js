@@ -1,7 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const categoryRouter = require('./router/category.router')
 const server = express()
+server.use(cors({origin: "http://localhost:3000"}))
 server.use(express.json())
 server.use("/category", categoryRouter)
 

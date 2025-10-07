@@ -1,10 +1,10 @@
 // components/CategoryTable.jsx
 import { getCategories } from '@/library/api-calls';
+import Link from 'next/link';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 
 export default async function CategoryTable() {
     const categories = await getCategories()
-    console.log(categories);
 
 
 
@@ -15,9 +15,11 @@ export default async function CategoryTable() {
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">Categories</h2>
-                <button className="bg-blue-600 text-white px-4 py-2 text-sm rounded hover:bg-blue-700 transition">
-                    + Add Category
-                </button>
+                <Link href="/admin/categoryTable/add">
+                    <button className="bg-blue-600 text-white px-4 py-2 text-sm rounded hover:bg-blue-700 transition">
+                        + Add Category
+                    </button>
+                </Link>
             </div>
 
             {/* Table */}
