@@ -20,12 +20,13 @@ export default function page() {
 
     function submitHandler(e) {
         e.preventDefault()
-        const data = {
-            name: nameRef.current.value,
-            slug: slugRef.current.value
-        }
+             
+        const formData = new FormData();
+        formData.append("name", nameRef.current.value);
+        formData.append("slug", slugRef.current.value)
+        formData.append("image", e.target.category_image.files[0])
 
-        axios.post("http://localhost:5000/category/create", data).then(
+        axios.post("http://localhost:5000/category/create", formData).then(
             (response)=> {
                 // console.log(response.data.success);
                 notify(response.data.message, {flag: response.data.success})
@@ -87,7 +88,9 @@ export default function page() {
                     <div className=" w-full flex flex-col items-center justify-center text-sm h-30 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" >
                         <input
                             id="file_input"
-                            type="file" />
+                            type="file"
+                            name="category_image"
+                             />
                         <FaRegImage  className='text-5xl'/>
                     </div>
 
@@ -104,3 +107,4 @@ export default function page() {
         </div>
     )
 }
+
