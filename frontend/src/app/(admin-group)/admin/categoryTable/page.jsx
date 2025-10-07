@@ -1,4 +1,6 @@
 // components/CategoryTable.jsx
+import DeleteBtn from '@/components/website-components/DeleteBtn';
+import StatusBtn from '@/components/website-components/StatusBtn';
 import { getCategories } from '@/library/api-calls';
 import { axiosInstance } from '@/library/helper';
 import Link from 'next/link';
@@ -52,6 +54,9 @@ export default async function CategoryTable() {
                                     <button className="text-blue-600 hover:text-blue-800 transition">
                                         <FiEdit />
                                     </button>
+                                    <StatusBtn status={cat.status} id={cat._id} />
+                                    
+                                    <DeleteBtn id={cat._id} />
                                     <button className="text-red-600 hover:text-red-800 transition">
                                         <FiTrash2 />
                                     </button>

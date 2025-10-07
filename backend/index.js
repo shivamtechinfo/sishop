@@ -19,7 +19,6 @@ server.listen(
             }
         ).catch(()=> {
             console.log('unable to connect database');
-            
         })
         
     }

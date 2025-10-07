@@ -1,6 +1,7 @@
 const categoryModel = require('../model/category.model')
-const { noContentResponse, createdResponse, serverErrorResponse, errorResponse, successResponse } = require('../utility/response')
+const { noContentResponse, createdResponse, serverErrorResponse, errorResponse, successResponse, updatedResponse, deletedResponse } = require('../utility/response')
 const { createUniqueName } = require('../utility/helper')
+const fs = require('fs')
 
 const category = {
     async create(req, res) {
@@ -75,7 +76,35 @@ const category = {
         } catch (error) {
             return serverErrorResponse(res, error.msg)
         }
-    }
+    },
+    async deleteById(req, res) {
+        try {
+            const id = req.params.id;
+            const existingCat = await categoryModel.findById(id);
+            if (existingCat) {
+                fs.unlinkSync(`public/images/category/${existingCat.image}`)
+            }
+            await categoryModel.findByIdAndDelete(id)
+            return deletedResponse(res)
+        } catch (error) {
+            return serverErrorResponse(res, error.errmsg)
+        }
+    },
+    async status(req, res) {
+        try {
+            const id = req.params.id;
+            const category = await categoryModel.findById(id);
+            await categoryModel.findByIdAndUpdate(
+                id,
+                { $set: { status: !category.status } }
+            )
+            return updatedResponse(res, "Status Update")
+        } catch (error) {
+            return serverErrorResponse(res, error.errmsg)
+        }
+    },
+
+
 }
 
 module.exports = category
