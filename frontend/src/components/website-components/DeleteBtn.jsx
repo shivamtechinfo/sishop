@@ -21,7 +21,7 @@ export default function DeleteBtn({ id }) {
   }
 
   return (
-    <button onClick={deleteHandler} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium cursor-pointer hover:bg-gray-200">
+    <button onClick={deleteHandler} className="text-red-600 hover:text-red-800 transition rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium cursor-pointer hover:bg-gray-200">
       <FiTrash2  />
     </button>
   )

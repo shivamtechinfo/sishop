@@ -20,7 +20,7 @@ export default function StatusBtn({ id, status }) {
     }
 
     return (
-        <button onClick={statusHandler} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium hover:bg-gray-200">
+        <button onClick={statusHandler} className="rounded-md cursor-pointer bg-gray-100 px-3 py-1.5 text-xs font-medium hover:bg-gray-200">
             {
                 status ?
                     "Active"

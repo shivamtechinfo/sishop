@@ -6,8 +6,8 @@ const getCategories = async (id = null) => {
         if(id != null) API += `/${id}`
         // console.log(API);
         
-        // http://localhost:5000/category/
-        // http://localhost:5000/category/68b00eca8029bc625c33343f   //inko browser par check kar sakte hai
+        // http://localhost:5000/category/ //yah to chal rahi broser me
+        // http://localhost:5000/category/68b00eca8029bc625c33343f   //yah nahi chal rahi hai
         const response = await axiosInstance.get(API)
         // console.log(response.data, "resp");
 

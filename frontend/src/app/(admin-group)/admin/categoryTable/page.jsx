@@ -8,12 +8,17 @@ import { FiEdit } from 'react-icons/fi';
 
 export default async function CategoryTable() {
     const category = await getCategories()
+<<<<<<< HEAD
     const categories =  category.data
 console.log(categories);
 
 
 
 
+=======
+    const categories = category.data
+    
+>>>>>>> 4c6bcebcba2aac4e05a67fde08ce315d649be5e5
     // Dummy data (you can replace this with real API data)
 
     return (
@@ -41,7 +46,7 @@ console.log(categories);
                     </thead>
                     <tbody className="text-gray-700">
                         {categories.map((cat) => (
-                            <tr key={cat.id} className="border-b hover:bg-gray-50">
+                            <tr  key={cat.id} className="border-b hover:bg-gray-50">
                                 <td className="px-4 py-3">
                                     <img
                                         src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.image}`}
@@ -55,16 +60,13 @@ console.log(categories);
 
                                     <Link href={`/admin/categoryTable/edit/${cat._id}`}>
                                         <button className="text-blue-600 hover:text-blue-800 cursor-pointer transition">
-                                            <FiEdit />
+                                            <FiEdit className='text-xl'/>
                                         </button>
                                     </Link>
 
                                     <StatusBtn status={cat.status} id={cat._id} />
 
                                     <DeleteBtn id={cat._id} />
-                                    <button className="text-red-600 hover:text-red-800 transition">
-
-                                    </button>
                                 </td>
                             </tr>
                         ))}

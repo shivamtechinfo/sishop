@@ -14,6 +14,8 @@ export default function categoryEdit({ params }) {
 
     async function getCategory() {
         const categoryJSON = await getCategories(params?.category_id)
+      
+        
         console.log(categoryJSON.data, "data");
         
         setCategory(categoryJSON.data)
