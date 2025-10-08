@@ -7,12 +7,9 @@ import Link from 'next/link';
 import { FiEdit } from 'react-icons/fi';
 
 export default async function CategoryTable() {
-    const categories = await getCategories()
-    console.log(categories);
-
-
-
-
+    const category = await getCategories()
+    const categories = category.data
+    
     // Dummy data (you can replace this with real API data)
 
     return (
@@ -40,7 +37,7 @@ export default async function CategoryTable() {
                     </thead>
                     <tbody className="text-gray-700">
                         {categories.map((cat) => (
-                            <tr key={cat.id} className="border-b hover:bg-gray-50">
+                            <tr  key={cat.id} className="border-b hover:bg-gray-50">
                                 <td className="px-4 py-3">
                                     <img
                                         src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.image}`}
@@ -54,16 +51,13 @@ export default async function CategoryTable() {
 
                                     <Link href={`/admin/categoryTable/edit/${cat._id}`}>
                                         <button className="text-blue-600 hover:text-blue-800 cursor-pointer transition">
-                                            <FiEdit />
+                                            <FiEdit className='text-xl'/>
                                         </button>
                                     </Link>
 
                                     <StatusBtn status={cat.status} id={cat._id} />
 
                                     <DeleteBtn id={cat._id} />
-                                    <button className="text-red-600 hover:text-red-800 transition">
-
-                                    </button>
                                 </td>
                             </tr>
                         ))}
