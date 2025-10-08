@@ -3,6 +3,7 @@
 import { axiosInstance, notify } from '@/library/helper'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import { FiTrash2 } from 'react-icons/fi';
 
 export default function DeleteBtn({ id }) {
   const router = useRouter()
@@ -20,8 +21,8 @@ export default function DeleteBtn({ id }) {
   }
 
   return (
-    <button onClick={deleteHandler} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium hover:bg-gray-200">
-      Delete
+    <button onClick={deleteHandler} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium cursor-pointer hover:bg-gray-200">
+      <FiTrash2  />
     </button>
   )
 }

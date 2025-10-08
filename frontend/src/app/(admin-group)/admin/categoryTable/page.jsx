@@ -4,12 +4,12 @@ import StatusBtn from '@/components/website-components/StatusBtn';
 import { getCategories } from '@/library/api-calls';
 import { axiosInstance } from '@/library/helper';
 import Link from 'next/link';
-import { FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 
 export default async function CategoryTable() {
     const categories = await getCategories()
     console.log(categories);
-    
+
 
 
 
@@ -51,14 +51,18 @@ export default async function CategoryTable() {
                                 <td className="px-4 py-3">{cat.name}</td>
                                 <td className="px-4 py-3">{cat.slug}</td>
                                 <td className="px-4 py-3 text-right space-x-2">
-                                    <button className="text-blue-600 hover:text-blue-800 transition">
-                                        <FiEdit />
-                                    </button>
+
+                                    <Link href={`/admin/categoryTable/edit/${cat._id}`}>
+                                        <button className="text-blue-600 hover:text-blue-800 cursor-pointer transition">
+                                            <FiEdit />
+                                        </button>
+                                    </Link>
+
                                     <StatusBtn status={cat.status} id={cat._id} />
-                                    
+
                                     <DeleteBtn id={cat._id} />
                                     <button className="text-red-600 hover:text-red-800 transition">
-                                        <FiTrash2 />
+
                                     </button>
                                 </td>
                             </tr>

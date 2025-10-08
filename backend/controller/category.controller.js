@@ -103,6 +103,70 @@ const category = {
             return serverErrorResponse(res, error.errmsg)
         }
     },
+    async update(req, res) {
+        try {
+            const id = req.params.id
+            const categoryImg = req.files.image
+            console.log(categoryImg, "categoryImg")
+            console.log(req.body);
+            
+
+
+            const { name, slug } = req.body
+
+            const existingItem = await categoryModel.findById(id)
+            console.log(existingItem);
+            
+            if (!existingItem) {
+                return serverErrorResponse(res, "Category not found", 409)
+            }
+
+            const update = {}
+            if (name) update.name = name
+            if (slug) update.slug = slug
+
+            if (categoryImg) {
+                const image = createUniqueName(categoryImg.name)
+                const destination = 'public/images/category/' + image
+                categoryImg.mv(
+                    destination,
+                    async (error) => {
+                        if (error) {
+                            return errorResponse(res, "File not found")
+                        } else {
+                            fs.unlinkSync(`public/images/category/${existingItem.image}`)
+                            console.log(update);
+                            
+                            update.image = image
+                             await categoryModel.findByIdAndUpdate({
+                               id, 
+                               {$set: update}
+                            })
+
+                           
+                            return updatedResponse(res, "category updated successfully")
+                        }
+                    }
+                )
+            }
+
+
+
+
+            // const category = await categoryModel.create({
+            //     name,
+            //     slug
+            // })
+
+            // await category.save()
+            // return createdResponse(res, "category created successfully")
+
+        } catch (error) {
+            console.log(error);
+
+            return serverErrorResponse(res)
+        }
+    },
 
 
 }
