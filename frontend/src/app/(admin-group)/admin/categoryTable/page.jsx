@@ -7,8 +7,9 @@ import Link from 'next/link';
 import { FiEdit } from 'react-icons/fi';
 
 export default async function CategoryTable() {
-    const categories = await getCategories()
-    console.log(categories);
+    const category = await getCategories()
+    const categories =  category.data
+console.log(categories);
 
 
 

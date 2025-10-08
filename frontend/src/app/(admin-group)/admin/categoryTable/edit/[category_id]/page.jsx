@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaRegImage } from "react-icons/fa6";
 
 export default function categoryEdit({ params }) {
-    const [categories, setCategories] = useState({})
+    const [category, setCategory] = useState({})
     const nameRef = useRef()
     const slugRef = useRef()
 
@@ -16,7 +16,7 @@ export default function categoryEdit({ params }) {
         const categoryJSON = await getCategories(params?.category_id)
         console.log(categoryJSON.data, "data");
         
-        setCategories(categoryJSON.data)
+        setCategory(categoryJSON.data)
     }
 
     useEffect(() => {

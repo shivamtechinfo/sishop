@@ -138,10 +138,10 @@ const category = {
                             console.log(update);
                             
                             update.image = image
-                             await categoryModel.findByIdAndUpdate({
+                             await categoryModel.findByIdAndUpdate(
                                id, 
                                {$set: update}
-                            })
+                            )
 
                            
                             return updatedResponse(res, "category updated successfully")
