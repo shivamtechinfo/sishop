@@ -1,15 +1,15 @@
 // components/CategoryTable.jsx
 import DeleteBtn from '@/components/website-components/DeleteBtn';
 import StatusBtn from '@/components/website-components/StatusBtn';
-import { getCategories } from '@/library/api-calls';
+import { getBrands  } from '@/library/api-calls';
 import { axiosInstance } from '@/library/helper';
 import Link from 'next/link';
 import { FiEdit } from 'react-icons/fi';
 
 export default async function CategoryTable() {
-    const category = await getCategories()
-    const categories = category.data
-    console.log(categories);
+    const brandsJSON = await getBrands()
+    const brands = brandsJSON.data
+    console.log(brands);
 
     // Dummy data (you can replace this with real API data)
 
@@ -18,7 +18,7 @@ export default async function CategoryTable() {
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">Categories</h2>
-                <Link href="/admin/categoryTable/add">
+                <Link href="/admin/brand/add">
                     <button className="bg-blue-600 text-white px-4 py-2 text-sm rounded hover:bg-blue-700 transition">
                         + Add Category
                     </button>
@@ -37,28 +37,28 @@ export default async function CategoryTable() {
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
-                        {categories.map((cat) => (
-                            <tr key={cat.id} className="border-b hover:bg-gray-50">
+                        {brands.map((brand) => (
+                            <tr key={brand.id} className="border-b hover:bg-gray-50">
                                 <td className="px-4 py-3">
                                     <img
-                                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.image}`}
-                                        alt={cat.name}
+                                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/brand/${brand.image}`}
+                                        alt={brand.name}
                                         className="w-12 h-12 object-cover rounded"
                                     />
                                 </td>
-                                <td className="px-4 py-3">{cat.name}</td>
-                                <td className="px-4 py-3">{cat.slug}</td>
+                                <td className="px-4 py-3">{brand.name}</td>
+                                <td className="px-4 py-3">{brand.slug}</td>
                                 <td className="px-4 py-3 text-right space-x-2">
 
-                                    <Link href={`/admin/categoryTable/edit/${cat._id}`}>
+                                    <Link href={`/admin/brand/edit/${brand._id}`}>
                                         <button className="text-blue-600 hover:text-blue-800 cursor-pointer transition">
                                             <FiEdit className='text-xl' />
                                         </button>
                                     </Link>
 
-                                    <StatusBtn status={cat.status} id={cat._id} />
+                                    <StatusBtn url="brand" status={brand.status} id={brand._id} />
 
-                                    <DeleteBtn id={cat._id} />
+                                    <DeleteBtn url="brand" id={brand._id} />
                                 </td>
                             </tr>
                         ))}
