@@ -26,7 +26,7 @@ export default function page() {
         formData.append("slug", slugRef.current.value)
         formData.append("image", e.target.category_image.files[0])
 
-        axiosInstance.post("category/create", formData).then(
+        axiosInstance.post("brand/create", formData).then(
             (response)=> {
                 // console.log(response.data.success);
                 notify(response.data.message, {flag: response.data.success})
