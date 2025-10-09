@@ -1,11 +1,12 @@
 'use client'
 
-import React from "react";
+import React, { useState } from "react";
 import { useRef } from "react";
 import { axiosInstance, notify, createSlug } from "@/library/helper";
 import Select from 'react-select'
 
 export default function ProductAdd({ category, colors, brands }) {
+    const [selcolor, setSelcolor] = useState([])
 
 
     const nameRef = useRef();
@@ -37,9 +38,9 @@ export default function ProductAdd({ category, colors, brands }) {
         formData.append("originalPrice", originalRef.current.value,)
         formData.append("discountPercentage", discountPercentageRef.current.value,)
         formData.append("finalPrice", finalRef.current.value,)
-        formData.append("categoryId", slugRef.current.value,)
-        formData.append("brandId", slugRef.current.value,)
-        formData.append("colors", slugRef.current.value,)
+        formData.append("categoryId", e.target.categoryId.value,)
+        formData.append("brandId", e.target.brand.value,)
+        formData.append("colors", JSON.stringify(selcolor))
         formData.append("thumbnail", slugRef.current.value,)
         formData.append("thumbnail", e.target.category_image.files[0])
         formData.append("images", e.target.category_image.files[0])
@@ -193,6 +194,10 @@ export default function ProductAdd({ category, colors, brands }) {
                         className="w-full border border-gray-300 rounded-md px-4"
                         closeMenuOnSelect={false}
                         isMulti
+                        onChange={(data)=> {
+                            const color = data.map(o=> o.value)
+                            setSelcolor(color)
+                        }}
                         options={
                             colors.map((col) => {
                                 return { value: col._id, label: col.name }
