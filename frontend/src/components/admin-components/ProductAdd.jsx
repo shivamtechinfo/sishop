@@ -1,0 +1,236 @@
+'use client'
+
+import React from "react";
+import { useRef } from "react";
+import { axiosInstance, notify, createSlug } from "@/library/helper";
+export default function ProductAdd({category, colors, brands}) {
+
+
+    const nameRef = useRef();
+    const slugRef = useRef();
+    const originalRef = useRef();
+    const discountPercentageRef = useRef();
+    const finalRef = useRef();
+
+
+    function generateSlug() {
+        const slug = createSlug(nameRef.current.value);
+        slugRef.current.value = slug;
+    }
+
+    function submitHandler(e) {
+        e.preventDefault();
+        // const data = {
+        //     name: nameRef.current.value,
+        //     slug: slugRef.current.value
+        // };
+        // console.log(e.target.category_image.files[0]);
+        // return
+
+        const formData = new FormData();
+        formData.append("name", nameRef.current.value,)
+        formData.append("slug", slugRef.current.value,)
+        formData.append("shortDescription", e.target.shortDescription.value,)
+        formData.append("longDescription", e.target.longDescription.value,)
+        formData.append("originalPrice", originalRef.current.value,)
+        formData.append("discountPercentage", discountPercentageRef.current.value,)
+        formData.append("finalPrice", finalRef.current.value,)
+        formData.append("categoryId", slugRef.current.value,)
+        formData.append("brandId", slugRef.current.value,)
+        formData.append("colors", slugRef.current.value,)
+        formData.append("thumbnail", slugRef.current.value,)
+        formData.append("thumbnail", e.target.category_image.files[0])
+        formData.append("images", e.target.category_image.files[0])
+
+        // axios.post("http://localhost:5000/category/create", data) //yanha data use kiya gaya hai
+        axiosInstance.post("category/create", formData) // data ki jagah formData use kiya gaya hai
+            .then((response) => {
+                // console.log(response.data);
+                // console.log(response.data.success);
+                notify(response.data.message, response.data.success)
+                if (response.data.success) {
+                    nameRef.current.value = ""
+                    slugRef.current.value = ""
+                }
+
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+
+    function priceCalculate() {
+        const op = originalRef.current.value;
+        const dp = discountRef.current.value;
+        const fp = op - (op * dp) / 100;
+        finalRef.current.value = parseInt(fp);
+    }
+
+
+    return (
+        <div>
+            <form
+                onSubmit={submitHandler}
+                className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-white rounded-lg shadow"
+            >
+                {/* Product Name */}
+                <input
+                    type="text"
+                    ref={nameRef}
+                    onChange={generateSlug}
+                    name="name"
+                    placeholder="Product Name"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
+                />
+
+                {/* Slug */}
+                <input
+                    type="text"
+                    ref={slugRef}
+                    readOnly
+                    name="slug"
+                    placeholder="Slug"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
+                />
+
+                {/* Short Description */}
+                <textarea
+                    name="shortDescription"
+                    placeholder="Short Description"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 md:col-span-2"
+                    rows="2"
+                />
+
+                {/* Long Description */}
+                <textarea
+                    name="longDescription"
+                    placeholder="Long Description"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 md:col-span-2"
+                    rows="4"
+                />
+
+                {/* Pricing Row */}
+                <div className="md:col-span-2 flex flex-col md:flex-row gap-4">
+                    <input
+                        type="number"
+                        ref={originalRef}
+                        onChange={priceCalculate}
+                        name="originalPrice"
+                        placeholder="Original Price"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2"
+                    />
+                    <input
+                        type="number"
+                        ref={discountPercentageRef}
+                        onChange={priceCalculate}
+                        name="discountPercentage"
+                        placeholder="Discount Percentage"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2"
+                    />
+                    <input
+                        type="number"
+                        name="finalPrice"
+                        ref={finalRef}
+                        readOnly
+                        placeholder="Final Price"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2"
+                    />
+                </div>
+
+                {/* Category / Brand / Colors Row */}
+                <div className="md:col-span-2 flex h-10 flex-col md:flex-row gap-4">
+                    {/* Category Select */}
+                    <select
+                        name="categoryId"
+                        className="w-full border border-gray-300 rounded-md px-4"
+                    >
+                        <option value="">Select Category</option>
+                        {category?.map((cat) => (
+                            <option key={cat._id} value={cat._id}>{cat.name}</option>
+                        ))}
+                    </select>
+
+                    <select
+                        name="brandId"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2"
+                    >
+                        <option value="">Select Brand</option>
+                        {brands?.map((brand) => (
+                            <option key={brand._id} value={brand._id}>{brand.name}</option>
+                        ))}
+                    </select>
+
+                    {/* Color Multi-Select */}
+                    <select
+                        name="colors"
+                        multiple
+                        className="w-full border border-gray-300 rounded-md px-4 py-2"
+                    >
+                        {colors?.map((color) => (
+                            <option key={color._id} value={color._id}>{color.name}</option>
+                        ))}
+                    </select>
+                </div>
+
+
+
+                {/* Thumbnail */}
+                <input
+                    type="file"
+                    name="thumbnail"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
+                />
+
+                {/* Images */}
+                <input
+                    type="file"
+                    name="images"
+                    multiple
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
+                />
+
+                {/* Stock */}
+                <select
+                    name="stock"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
+                >
+                    <option value="true">In Stock</option>
+                    <option value="false">Out of Stock</option>
+                </select>
+
+                {/* Top Selling */}
+                <select
+                    name="topSelling"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
+                >
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+
+                {/* Status */}
+                <select
+                    name="status"
+                    className="w-full border border-gray-300 rounded-md px-4 py-2"
+                >
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+
+                {/* Submit Button */}
+                <div className="md:col-span-2 text-right">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md"
+                    >
+                        Submit Product
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    );
+}
+
+
