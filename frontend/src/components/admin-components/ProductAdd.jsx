@@ -42,8 +42,11 @@ export default function ProductAdd({ category, colors, brands }) {
         formData.append("brandId", e.target.brand.value,)
         formData.append("colors", JSON.stringify(selcolor))
         formData.append("thumbnail", slugRef.current.value,)
-        formData.append("thumbnail", e.target.category_image.files[0])
-        formData.append("images", e.target.category_image.files[0])
+        formData.append("thumbnail", e.target.thumbnail.files[0])
+        for (let img of e.target.images.files) {
+            formData.append("images", img)
+        }
+
 
         // axios.post("http://localhost:5000/category/create", data) //yanha data use kiya gaya hai
         axiosInstance.post("category/create", formData) // data ki jagah formData use kiya gaya hai
@@ -194,8 +197,8 @@ export default function ProductAdd({ category, colors, brands }) {
                         className="w-full border border-gray-300 rounded-md px-4"
                         closeMenuOnSelect={false}
                         isMulti
-                        onChange={(data)=> {
-                            const color = data.map(o=> o.value)
+                        onChange={(data) => {
+                            const color = data.map(o => o.value)
                             setSelcolor(color)
                         }}
                         options={
