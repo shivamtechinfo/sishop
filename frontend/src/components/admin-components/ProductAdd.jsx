@@ -3,7 +3,9 @@
 import React from "react";
 import { useRef } from "react";
 import { axiosInstance, notify, createSlug } from "@/library/helper";
-export default function ProductAdd({category, colors, brands}) {
+import Select from 'react-select'
+
+export default function ProductAdd({ category, colors, brands }) {
 
 
     const nameRef = useRef();
@@ -142,6 +144,7 @@ export default function ProductAdd({category, colors, brands}) {
                 {/* Category / Brand / Colors Row */}
                 <div className="md:col-span-2 flex h-10 flex-col md:flex-row gap-4">
                     {/* Category Select */}
+                    {/* <Select options={options} />
                     <select
                         name="categoryId"
                         className="w-full border border-gray-300 rounded-md px-4"
@@ -150,9 +153,16 @@ export default function ProductAdd({category, colors, brands}) {
                         {category?.map((cat) => (
                             <option key={cat._id} value={cat._id}>{cat.name}</option>
                         ))}
-                    </select>
+                    </select> */}
+                    <Select
+                        className="w-full border border-gray-300 rounded-md px-4"
+                        options={
+                            category.map((cat) => {
+                                return { value: cat._id, label: cat.name }
+                            })
+                        } />
 
-                    <select
+                    {/* <select
                         name="brandId"
                         className="w-full border border-gray-300 rounded-md px-4 py-2"
                     >
@@ -160,10 +170,17 @@ export default function ProductAdd({category, colors, brands}) {
                         {brands?.map((brand) => (
                             <option key={brand._id} value={brand._id}>{brand.name}</option>
                         ))}
-                    </select>
+                    </select> */}
+                    <Select
+                        className="w-full border border-gray-300 rounded-md px-4"
+                        options={
+                            brands.map((cat) => {
+                                return { value: cat._id, label: cat.name }
+                            })
+                        } />
 
                     {/* Color Multi-Select */}
-                    <select
+                    {/* <select
                         name="colors"
                         multiple
                         className="w-full border border-gray-300 rounded-md px-4 py-2"
@@ -171,7 +188,17 @@ export default function ProductAdd({category, colors, brands}) {
                         {colors?.map((color) => (
                             <option key={color._id} value={color._id}>{color.name}</option>
                         ))}
-                    </select>
+                    </select> */}
+                    <Select
+                        className="w-full border border-gray-300 rounded-md px-4"
+                        closeMenuOnSelect={false}
+                        isMulti
+                        options={
+                            colors.map((col) => {
+                                return { value: col._id, label: col.name }
+                            })
+                        }
+                    />
                 </div>
 
 
