@@ -5,12 +5,15 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { FiTrash2 } from 'react-icons/fi';
 
-export default function DeleteBtn({ id }) {
+export default function DeleteBtn({ id, url }) {
+  
   const router = useRouter()
   function deleteHandler() {
-    axiosInstance.delete(`category/delete/${id}`).then(
+    axiosInstance.delete(`${url}/delete/${id}`).then(
       (response) => {
         notify(response.data.message, response.data.success)
+        console.log(response.data.message, response.data.success);
+        
         if (response.data.success) {
           router.refresh()
         }

@@ -24,4 +24,25 @@ const getCategories = async (id = null) => {
 }
 
 
-export { getCategories }
+const getColors = async (id = null) => {
+    try {
+        let API = "color"
+        if(id != null) API += `/${id}`
+        const response = await axiosInstance.get(API)
+        if (response.data.success) {
+            return response.data
+        } else {
+            return null
+        }
+    }
+    catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+
+export { getCategories, getColors }
+
+
+

@@ -1,15 +1,15 @@
 // components/CategoryTable.jsx
 import DeleteBtn from '@/components/website-components/DeleteBtn';
 import StatusBtn from '@/components/website-components/StatusBtn';
-import { getCategories } from '@/library/api-calls';
+import { getColors } from '@/library/api-calls';
 import { axiosInstance } from '@/library/helper';
 import Link from 'next/link';
 import { FiEdit } from 'react-icons/fi';
 
 export default async function ColorTable() {
-    const category = await getCategories()
-    const categories = category.data
-    console.log(categories);
+    const colorJSON = await getColors()
+    const colors = colorJSON.data
+    // console.log(colors);
 
     // Dummy data (you can replace this with real API data)
 
@@ -37,28 +37,26 @@ export default async function ColorTable() {
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
-                        {categories.map((cat) => (
-                            <tr key={cat.id} className="border-b hover:bg-gray-50">
-                                <td className="px-4 py-3">
-                                    <img
-                                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/category/${cat.image}`}
-                                        alt={cat.name}
-                                        className="w-12 h-12 object-cover rounded"
-                                    />
+                        {colors.map((color) => (
+                            <tr key={color.id} className="border-b hover:bg-gray-50">
+                                <td
+                                style={{background : color.hexcode}}
+                                className="px-4 py-3">
+                                  
                                 </td>
-                                <td className="px-4 py-3">{cat.name}</td>
-                                <td className="px-4 py-3">{cat.slug}</td>
+                                <td className="px-4 py-3">{color.name}</td>
+                                <td className="px-4 py-3">{color.slug}</td>
                                 <td className="px-4 py-3 text-right space-x-2">
 
-                                    <Link href={`/admin/categoryTable/edit/${cat._id}`}>
+                                    <Link href={`/admin/categoryTable/edit/${color._id}`}>
                                         <button className="text-blue-600 hover:text-blue-800 cursor-pointer transition">
                                             <FiEdit className='text-xl' />
                                         </button>
                                     </Link>
 
-                                    <StatusBtn status={cat.status} id={cat._id} />
+                                    <StatusBtn url="color" status={color.status} id={color._id} />
 
-                                    <DeleteBtn id={cat._id} />
+                                    <DeleteBtn url="color" id={color._id} />
                                 </td>
                             </tr>
                         ))}

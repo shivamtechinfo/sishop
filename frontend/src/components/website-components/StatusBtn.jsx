@@ -4,10 +4,10 @@ import { axiosInstance, notify } from '@/library/helper'
 import { Router } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 
-export default function StatusBtn({ id, status }) {
+export default function StatusBtn({ id, status, url }) {
     const router = useRouter()
     function statusHandler() {
-        axiosInstance.patch(`category/status/${id}`).then(
+        axiosInstance.patch(`${url}/status/${id}`).then(
             (response) => {
                 notify(response.data.message, response.data.success)
                 if (response.data.success) {
