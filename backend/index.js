@@ -5,19 +5,21 @@ const cors = require('cors')
 const categoryRouter = require('./router/category.router')
 const colorRouter = require('./router/color.router')
 const brandRouter = require('./router/brand.router')
+const productRouter = require('./router/product.router')
 const server = express();
 server.use(cors({origin: "http://localhost:3000"}))
 server.use(express.json())
 server.use('/category', categoryRouter)
 server.use('/color', colorRouter)
 server.use('/brand', brandRouter)
+server.use('/product', productRouter)
 server.use(express.static('public'));
 
 server.listen(
     5000, 
     ()=> {
         console.log('Server Running PORT 5000');
-        mongoose.connect(process.env.DATABASE_URL, {dbName: "rishop"}).then(
+        mongoose.connect(process.env.DATABASE_URL, {dbName: "sishop"}).then(
             ()=> {
                 console.log("Database Connected");
             }
