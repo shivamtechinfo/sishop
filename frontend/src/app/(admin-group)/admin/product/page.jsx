@@ -1,9 +1,78 @@
-import React from 'react'
+// components/CategoryTable.jsx
+import DeleteBtn from '@/components/website-components/DeleteBtn';
+import StatusBtn from '@/components/website-components/StatusBtn';
+import { getProducts } from '@/library/api-calls';
+import { axiosInstance } from '@/library/helper';
+import Link from 'next/link';
+import { FiEdit } from 'react-icons/fi';
 
-export default function page() {
+export default async function product() {
+  const product = await getProducts()
+  const products = product.data
+  console.log(products);
+
+  // Dummy data (you can replace this with real API data)
+
   return (
-    <div>
-      product
+    <div className="bg-white shadow rounded-lg p-6">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold text-gray-800">Categories</h2>
+        <Link href="/admin/product/add">
+          <button className="bg-blue-600 text-white px-4 py-2 text-sm rounded hover:bg-blue-700 transition">
+            + Add Category
+          </button>
+        </Link>
+      </div>
+
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-sm text-left">
+          <thead className="bg-gray-50 text-gray-600 border-b">
+            <tr>
+              <th className="px-4 py-2">Image</th>
+              <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Slug</th>
+              <th className="px-4 py-2 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="text-gray-700">
+            {products.map((product) => (
+              <tr key={product.id} className="border-b hover:bg-gray-50">
+                <td className="px-4 py-3">
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}images/product/${product.thumbnail}`}
+                    alt={product.name}
+                    className="w-12 h-12 object-cover rounded"
+                  />
+                </td>
+                <td className="px-4 py-3">{product.name}</td>
+                <td className="px-4 py-3">{product.slug}</td>
+                <td className="px-4 py-3 text-right space-x-2">
+
+                  <Link href={`/admin/product/edit/${product._id}`}>
+                    <button className="text-blue-600 hover:text-blue-800 cursor-pointer transition">
+                      <FiEdit className='text-xl' />
+                    </button>
+                  </Link>
+                  <button className=" hover:text-blue-800 cursor-pointer transition">
+                    Active
+                  </button>
+                  <button className=" hover:text-blue-800 cursor-pointer transition">
+                    Stock
+                  </button>
+                  <button className=" hover:text-blue-800 cursor-pointer transition">
+                    top selling
+                  </button>
+                  <StatusBtn url="product" status={product.status} id={product._id} />
+
+                  <DeleteBtn url="product" id={product._id} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-  )
+  );
 }

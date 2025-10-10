@@ -48,55 +48,25 @@ const product = {
             return serverErrorResponse(res)
         }
     },
+    async read(req, res) {
+        try {
+            const id = req.params.id
+            let product = null;
+            if (id) {
+                product = await productModel.findById(id)
+            } else {
+                product = await productModel.find()
+            }
+
+            if (!product) errorResponse(res, "product not found")
+            return successResponse(res, "Product Found", product)
+        } catch (error) {
+            return serverErrorResponse(res, error.errmsg)
+        }
+    }
+
 }
 
 module.exports = product
 
 
-
-
-
-//   const categoryImg = req.files.image
-
-//             const { name, slug } = req.body
-//             if (!name || !slug) {
-//                 return noContentResponse(res)
-//             }
-
-//             const existingItem = await categoryModel.findOne({
-//                 name
-//             })
-
-//             if (existingItem) {
-//                 return serverErrorResponse(res, "Category already created", 409)
-//             }
-
-//             const image = createUniqueName(categoryImg.name)
-
-//             const destination = 'public/images/category/' + image
-
-//             categoryImg.mv(
-//                 destination,
-//                 async (error) => {
-//                     if (error) {
-//                         return errorResponse(res, "File not found")
-//                     } else {
-//                         const category = await categoryModel.create({
-//                             name,
-//                             slug,
-//                             image
-//                         })
-
-//                         await category.save()
-//                         return createdResponse(res, "category created successfully")
-//                     }
-//                 }
-//             )
-
-//             // const category = await categoryModel.create({
-//             //     name,
-//             //     slug
-//             // })
-
-//             // await category.save()
-//             // return createdResponse(res, "category created successfully")
