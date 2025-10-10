@@ -7,6 +7,9 @@ import Select from 'react-select'
 
 export default function ProductAdd({ category, colors, brands }) {
     const [selcolor, setSelcolor] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedBrand, setSelectedBrand] = useState(null);
+    // const [longDescription, setlongDescription] = useState(null)
 
 
     const nameRef = useRef();
@@ -34,12 +37,14 @@ export default function ProductAdd({ category, colors, brands }) {
         formData.append("name", nameRef.current.value,)
         formData.append("slug", slugRef.current.value,)
         formData.append("shortDescription", e.target.shortDescription.value,)
-        formData.append("longDescription", e.target.longDescription.value,)
+        formData.append("longDescription", e.target.longDec.value)
         formData.append("originalPrice", originalRef.current.value,)
         formData.append("discountPercentage", discountPercentageRef.current.value,)
         formData.append("finalPrice", finalRef.current.value,)
-        formData.append("categoryId", e.target.categoryId.value,)
-        formData.append("brandId", e.target.brand.value,)
+        // formData.append("categoryId", e.target.categoryId.value,)
+        formData.append("categoryId", selectedCategory)
+        // formData.append("brandId", e.target.brand.value,)
+        formData.append("brandId", selectedBrand)
         formData.append("colors", JSON.stringify(selcolor))
         formData.append("thumbnail", slugRef.current.value,)
         formData.append("thumbnail", e.target.thumbnail.files[0])
@@ -49,7 +54,7 @@ export default function ProductAdd({ category, colors, brands }) {
 
 
         // axios.post("http://localhost:5000/category/create", data) //yanha data use kiya gaya hai
-        axiosInstance.post("category/create", formData) // data ki jagah formData use kiya gaya hai
+        axiosInstance.post("product/create", formData) // data ki jagah formData use kiya gaya hai
             .then((response) => {
                 // console.log(response.data);
                 // console.log(response.data.success);
@@ -69,7 +74,7 @@ export default function ProductAdd({ category, colors, brands }) {
 
     function priceCalculate() {
         const op = originalRef.current.value;
-        const dp = discountRef.current.value;
+        const dp = discountPercentageRef.current.value;
         const fp = op - (op * dp) / 100;
         finalRef.current.value = parseInt(fp);
     }
@@ -111,11 +116,13 @@ export default function ProductAdd({ category, colors, brands }) {
 
                 {/* Long Description */}
                 <textarea
-                    name="longDescription"
+                    name="longDec"
                     placeholder="Long Description"
                     className="w-full border border-gray-300 rounded-md px-4 py-2 md:col-span-2"
                     rows="4"
                 />
+
+                {/* <TextEditor value={longDescription} changeHandler={(data)=> setlongDescription(data)}/> */}
 
                 {/* Pricing Row */}
                 <div className="md:col-span-2 flex flex-col md:flex-row gap-4">
@@ -159,12 +166,16 @@ export default function ProductAdd({ category, colors, brands }) {
                         ))}
                     </select> */}
                     <Select
+                        instanceId="category-select"
                         className="w-full border border-gray-300 rounded-md px-4"
                         options={
                             category.map((cat) => {
                                 return { value: cat._id, label: cat.name }
                             })
-                        } />
+                        }
+                        value={selectedCategory}
+                        onChange={(option) => setSelectedCategory(option)}
+                    />
 
                     {/* <select
                         name="brandId"
@@ -176,12 +187,16 @@ export default function ProductAdd({ category, colors, brands }) {
                         ))}
                     </select> */}
                     <Select
+                        instanceId="brand-select"
                         className="w-full border border-gray-300 rounded-md px-4"
                         options={
                             brands.map((cat) => {
                                 return { value: cat._id, label: cat.name }
                             })
-                        } />
+                        }
+                        value={selectedBrand}
+                        onChange={(option) => setSelectedBrand(option)}
+                    />
 
                     {/* Color Multi-Select */}
                     {/* <select
@@ -194,6 +209,7 @@ export default function ProductAdd({ category, colors, brands }) {
                         ))}
                     </select> */}
                     <Select
+                        instanceId="color-select"
                         className="w-full border border-gray-300 rounded-md px-4"
                         closeMenuOnSelect={false}
                         isMulti
