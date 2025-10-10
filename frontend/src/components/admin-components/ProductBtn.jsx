@@ -56,8 +56,7 @@ export default function ProductBtn({ product }) {
             {
                 toggle && <ProductView product={product} close={() => setToggle(null)} />
             }
-
-
+     
         </td>
     )
 }

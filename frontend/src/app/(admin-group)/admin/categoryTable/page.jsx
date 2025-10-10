@@ -1,6 +1,6 @@
 // components/CategoryTable.jsx
-import DeleteBtn from '@/components/website-components/DeleteBtn';
-import StatusBtn from '@/components/website-components/StatusBtn';
+import DeleteBtn from '@/components/admin-components/DeleteBtn';
+import StatusBtn from '@/components/admin-components/StatusBtn';
 import { getCategories } from '@/library/api-calls';
 import { axiosInstance } from '@/library/helper';
 import Link from 'next/link';

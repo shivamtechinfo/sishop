@@ -1,16 +1,20 @@
+
 // components/CategoryTable.jsx
 import ProductBtn from '@/components/admin-components/ProductBtn';
-import DeleteBtn from '@/components/website-components/DeleteBtn';
-import StatusBtn from '@/components/website-components/StatusBtn';
+import DeleteBtn from '@/components/admin-components/DeleteBtn';
+import StatusBtn from '@/components/admin-components/StatusBtn';
 import { getProducts } from '@/library/api-calls';
 import { axiosInstance } from '@/library/helper';
 import Link from 'next/link';
 import { FiEdit } from 'react-icons/fi';
+import ProductView from '@/components/admin-components/ProductView';
 
 export default async function product() {
   const product = await getProducts()
   const products = product.data
-  console.log(products);
+  // console.log(products);
+
+
 
   // Dummy data (you can replace this with real API data)
 
@@ -51,13 +55,17 @@ export default async function product() {
                 <td className="px-4 py-3">{product.slug}</td>
                 <td className="px-4 py-3 text-right space-x-2">
 
-                  <ProductBtn product={product}  />
+                  <ProductBtn product={product} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
     </div>
   );
 }
+
+
+
