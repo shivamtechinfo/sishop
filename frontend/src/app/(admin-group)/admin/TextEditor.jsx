@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, {  useRef } from 'react';
 import JoditEditor from "jodit-pro-react"; // or "jodit-react" if using free version
 
-const TextEditor = ({ placeholder, value, changeHandler }) => {
+
+const TextEditor = ({  value, changeHandler }) => {
 	const editor = useRef(null);
 
 	return (

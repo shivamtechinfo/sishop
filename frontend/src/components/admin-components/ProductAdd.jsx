@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import { axiosInstance, notify, createSlug } from "@/library/helper";
 import Select from 'react-select'
+import TextEditor from "@/app/(admin-group)/admin/TextEditor";
 
 export default function ProductAdd({ category, colors, brands }) {
     const [selcolor, setSelcolor] = useState([])
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedBrand, setSelectedBrand] = useState(null);
-    // const [longDescription, setlongDescription] = useState(null)
+    const [longDescription, setlongDescription] = useState(null)
 
 
     const nameRef = useRef();
@@ -37,7 +38,8 @@ export default function ProductAdd({ category, colors, brands }) {
         formData.append("name", nameRef.current.value,)
         formData.append("slug", slugRef.current.value,)
         formData.append("shortDescription", e.target.shortDescription.value,)
-        formData.append("longDescription", e.target.longDec.value)
+        // formData.append("longDescription", e.target.longDec.value)
+        formData.append("longDescription", longDescription)
         formData.append("originalPrice", originalRef.current.value,)
         formData.append("discountPercentage", discountPercentageRef.current.value,)
         formData.append("finalPrice", finalRef.current.value,)
@@ -115,14 +117,14 @@ export default function ProductAdd({ category, colors, brands }) {
                 />
 
                 {/* Long Description */}
-                <textarea
+                {/* <textarea
                     name="longDec"
                     placeholder="Long Description"
                     className="w-full border border-gray-300 rounded-md px-4 py-2 md:col-span-2"
                     rows="4"
-                />
+                /> */}
 
-                {/* <TextEditor value={longDescription} changeHandler={(data)=> setlongDescription(data)}/> */}
+                <TextEditor value={longDescription} changeHandler={(data)=> setlongDescription(data)}/>
 
                 {/* Pricing Row */}
                 <div className="md:col-span-2 flex flex-col md:flex-row gap-4">
