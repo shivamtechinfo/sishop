@@ -80,6 +80,8 @@ const category = {
     async deleteById(req, res) {
         try {
             const id = req.params.id;
+            console.log(id);
+            
             const existingCat = await categoryModel.findById(id);
             if (existingCat) {
                 fs.unlinkSync(`public/images/category/${existingCat.image}`)

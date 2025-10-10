@@ -9,7 +9,7 @@ import { FiEdit } from 'react-icons/fi';
 export default async function CategoryTable() {
     const category = await getCategories()
     const categories = category.data
-    console.log(categories);
+    // console.log(categories);
 
     // Dummy data (you can replace this with real API data)
 
@@ -56,9 +56,9 @@ export default async function CategoryTable() {
                                         </button>
                                     </Link>
 
-                                    <StatusBtn status={cat.status} id={cat._id} />
+                                    <StatusBtn url="category" status={cat.status} id={cat._id} />
 
-                                    <DeleteBtn id={cat._id} />
+                                    <DeleteBtn url="category" id={cat._id} />
                                 </td>
                             </tr>
                         ))}
