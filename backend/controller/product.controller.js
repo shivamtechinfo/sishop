@@ -63,6 +63,36 @@ const product = {
         } catch (error) {
             return serverErrorResponse(res, error.errmsg)
         }
+    },
+    async status(req, res) {
+        try {
+            const { flag } = req.body
+            const id = req.params.id;
+            const product = await productModel.findById(id);
+            if (!product) return noContentResponse(res);
+            const updateKey = {};
+            if (flag == 1) {
+                updateKey.status = !product.status
+            } else if (flag == 2) {
+                updateKey.stock = !product.stock
+            } else if (flag == 3) {
+                updateKey.topSelling = !product.topSelling
+            }
+
+
+            await productModel.findByIdAndUpdate(
+                id,
+                {
+                    $set: updateKey
+                }
+            )
+
+            return updatedResponse(res)
+
+        } catch (error) {
+            return serverErrorResponse(res, error.errmsg)
+        }
+
     }
 
 }

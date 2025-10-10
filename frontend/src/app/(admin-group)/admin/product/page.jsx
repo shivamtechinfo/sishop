@@ -1,4 +1,5 @@
 // components/CategoryTable.jsx
+import ProductBtn from '@/components/admin-components/ProductBtn';
 import DeleteBtn from '@/components/website-components/DeleteBtn';
 import StatusBtn from '@/components/website-components/StatusBtn';
 import { getProducts } from '@/library/api-calls';
@@ -50,23 +51,7 @@ export default async function product() {
                 <td className="px-4 py-3">{product.slug}</td>
                 <td className="px-4 py-3 text-right space-x-2">
 
-                  <Link href={`/admin/product/edit/${product._id}`}>
-                    <button className="text-blue-600 hover:text-blue-800 cursor-pointer transition">
-                      <FiEdit className='text-xl' />
-                    </button>
-                  </Link>
-                  <button className=" hover:text-blue-800 cursor-pointer transition">
-                    Active
-                  </button>
-                  <button className=" hover:text-blue-800 cursor-pointer transition">
-                    Stock
-                  </button>
-                  <button className=" hover:text-blue-800 cursor-pointer transition">
-                    top selling
-                  </button>
-                  <StatusBtn url="product" status={product.status} id={product._id} />
-
-                  <DeleteBtn url="product" id={product._id} />
+                  <ProductBtn product={product}  />
                 </td>
               </tr>
             ))}
