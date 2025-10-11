@@ -12,12 +12,18 @@ const admin = {
             if (!admin) return errorResponse(res, "Admin not found")
             if (password !== admin.password) return errorResponse(res, "Password not match")
 
-                //add jwt function jo token ko create karega
-           const token =  jwt.sign({
-                id : admin._id,
+            //add jwt function jo token ko create karega
+            const token = jwt.sign({
+                id: admin._id,
                 email: admin.email
-            }, process.env.TOKEN_SECRET_KEY, { expiresIn: 7 * 24 * 60 * 60 * 1000 });
-            return successResponse(res, token,  "Admin login")
+            }, process.env.TOKEN_SECRET_KEY, { expiresIn: '7d' });
+            res.cookie('admin_token', token, {
+                maxAge: 60 * 60, // 1 hour
+                httpOnly: false,    // Not accessible by JS
+                secure: false,    // Only sent over HTTPS
+                samesite: 'strict'    // CSRF protection
+            });
+            return successResponse(res, token, "Admin login")
 
         } catch (error) {
             return serverErrorResponse(res, error.message);
