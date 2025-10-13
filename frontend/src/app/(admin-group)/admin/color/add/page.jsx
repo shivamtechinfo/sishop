@@ -1,12 +1,15 @@
 
 'use client'
-import { createSlug, notify, axiosInstance } from '@/library/helper';
+import { createSlug, notify, axiosInstance, getCookies } from '@/library/helper';
 import axios from 'axios';
 
 import React, { useRef } from 'react'
 import { FaRegImage } from "react-icons/fa6";
 
 export default function page() {
+    const token = getCookies('admin_token')
+    // console.log(token);
+    
 
     const nameRef = useRef()
     const slugRef = useRef()
@@ -27,7 +30,11 @@ export default function page() {
 
         }
 
-        axiosInstance.post("color/create", data).then(
+        axiosInstance.post("color/create", data, {
+            headers : {
+                Authorization : token
+            }
+        }).then(
             (response) => {
                 // console.log(response.data.success);
                 notify(response.data.message, { flag: response.data.success })
