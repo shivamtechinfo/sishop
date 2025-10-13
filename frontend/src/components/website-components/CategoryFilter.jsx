@@ -14,7 +14,9 @@ export default function CategoryFilter({ categories }) {
                         {
                             categories && categories.map(category => (
                                 <li key={category.id}
-                                 className="cursor-pointer hover:text-black">{category.name}</li>
+                                 className="cursor-pointer hover:text-black">{category.name}
+                                 <span>({category.productCount})</span>
+                                 </li>
                             ))
                         }
                     </ul>

@@ -1,6 +1,7 @@
 const categoryModel = require('../model/category.model')
 const { noContentResponse, createdResponse, serverErrorResponse, errorResponse, successResponse, updatedResponse, deletedResponse } = require('../utility/response')
 const { createUniqueName } = require('../utility/helper')
+const productModel = require('../model/product.model')
 const fs = require('fs')
 
 const category = {
@@ -68,6 +69,23 @@ const category = {
                 category = await categoryModel.findById(id)
             } else {
                 category = await categoryModel.find()
+                const data = await Promise.all(
+                    category.map(
+                        async (cat) => {
+                            const productCount = await productModel.countDocuments({
+                                categoryId:
+                                    cat._id
+                            });
+
+                            return {
+                                ...cat.toObject(),
+                                productCount
+                            }
+                        }
+                    )
+                )
+
+                return successResponse(res, "Category Found", data)
             }
 
             if (!category) errorResponse(res, "Category not found")
@@ -81,7 +99,7 @@ const category = {
         try {
             const id = req.params.id;
             console.log(id);
-            
+
             const existingCat = await categoryModel.findById(id);
             if (existingCat) {
                 fs.unlinkSync(`public/images/category/${existingCat.image}`)
@@ -111,14 +129,14 @@ const category = {
             const categoryImg = req.files.image
             console.log(categoryImg, "categoryImg")
             console.log(req.body);
-            
+
 
 
             const { name, slug } = req.body
 
             const existingItem = await categoryModel.findById(id)
             console.log(existingItem);
-            
+
             if (!existingItem) {
                 return serverErrorResponse(res, "Category not found", 409)
             }
@@ -138,14 +156,14 @@ const category = {
                         } else {
                             fs.unlinkSync(`public/images/category/${existingItem.image}`)
                             console.log(update);
-                            
+
                             update.image = image
-                             await categoryModel.findByIdAndUpdate(
-                               id, 
-                               {$set: update}
+                            await categoryModel.findByIdAndUpdate(
+                                id,
+                                { $set: update }
                             )
 
-                           
+
                             return updatedResponse(res, "category updated successfully")
                         }
                     }
