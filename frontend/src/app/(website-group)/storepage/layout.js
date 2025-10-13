@@ -2,8 +2,22 @@
 import CategoryFilter from "@/components/website-components/CategoryFilter";
 import BrandFilter from "@/components/website-components/BrandFilter";
 import ColorFilter from "@/components/website-components/ColorFilter";
+import { getBrands, getCategories, getColors } from "@/library/api-calls";
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    {/* 🧭 get categories */ }
+    const categoryJSON = await getCategories(null)
+    const categories = categoryJSON.data
+
+    {/* 🧭 get brands */ }
+    const brandsJSON = await getBrands(null)
+    const brands = brandsJSON.data
+
+    {/* 🧭 get colors */ }
+    const colorJSON = await getColors(null)
+    const colors = colorJSON.data
+    
+
     return (
         <html lang="en">
             <body>
@@ -103,12 +117,12 @@ export default function RootLayout({ children }) {
                             {/* Left Sidebar: Filters */}
                             <div className="w-1/4 space-y-6">
                                 {/* Categories Filter */}
-                                <CategoryFilter />
+                                <CategoryFilter categories={categories} />
 
                                 {/* Brand Filter */}
-                                <BrandFilter />
+                                <BrandFilter brands={brands} />
                                 {/* Color Filter */}
-                                <ColorFilter />
+                                <ColorFilter  colors={colors}/>
 
                             </div>
 

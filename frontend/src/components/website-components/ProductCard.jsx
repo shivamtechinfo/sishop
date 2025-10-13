@@ -1,7 +1,10 @@
 import React from 'react'
 
-export default function ProductCard({ product }) {
-    const { name, finalPrice, discountPercentage, originalPrice, thumbnail } = product;
+export default function ProductCard({ product}) {
+    
+    const { name, finalPrice, discountPercentage, originalPrice, thumbnail  } = product;
+    
+    
 
     return (
         <div>
