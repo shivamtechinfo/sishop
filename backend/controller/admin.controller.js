@@ -18,12 +18,12 @@ const admin = {
                 email: admin.email
             }, process.env.TOKEN_SECRET_KEY, { expiresIn: '7d' });
             res.cookie('admin_token', token, {
-                maxAge: 60 * 60, // 1 hour
+                maxAge: 7 * 24 * 60 * 60, // 1 hour
                 httpOnly: false,    // Not accessible by JS
                 secure: false,    // Only sent over HTTPS
                 samesite: 'strict'    // CSRF protection
             });
-            return successResponse(res, token, "Admin login")
+            return successResponse(res,  "Admin login")
 
         } catch (error) {
             return serverErrorResponse(res, error.message);
