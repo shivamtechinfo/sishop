@@ -1,6 +1,7 @@
+import Link from 'next/link'
 import React from 'react'
 
-export default function CategoryFilter({ categories }) {    
+export default function CategoryFilter({ categories }) {
     return (
         <div>
             <div className="bg-white p-4 rounded-xl shadow border space-y-4">
@@ -13,10 +14,12 @@ export default function CategoryFilter({ categories }) {
                     <ul className="space-y-1 pl-3 text-gray-500">
                         {
                             categories && categories.map(category => (
-                                <li key={category.id}
-                                 className="cursor-pointer hover:text-black">{category.name}
-                                 <span>({category.productCount})</span>
-                                 </li>
+                                <Link href={`/storepage/${category.slug}`} key={category._id} >
+                                    <li
+                                        className="cursor-pointer hover:text-black">{category.name}
+                                        <span>({category.productCount})</span>
+                                    </li>
+                                </Link>
                             ))
                         }
                     </ul>

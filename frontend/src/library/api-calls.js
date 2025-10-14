@@ -23,15 +23,13 @@ const getCategories = async (id = null) => {
     }
 }
 
-const getProducts = async (id = null) => {
+const getProducts = async (id = null, categorySlug = null) => {
     try {
         let API = "product"
         if(id != null) API += `/${id}`
-        // console.log(API);
-        
-        // http://localhost:5000/category/ //yah to chal rahi broser me
-        // http://localhost:5000/category/68b00eca8029bc625c33343f   //yah nahi chal rahi hai
-        const response = await axiosInstance.get(API)
+        const query = new URLSearchParams()
+        if(categorySlug) query.append("categorySlug", categorySlug)
+        const response = await axiosInstance.get(`${API}?${query.toString()}`)
         // console.log(response.data, "resp");
 
         if (response.data.success) {

@@ -2,6 +2,8 @@ const productModel = require('../model/product.model')
 const { noContentResponse, createdResponse, serverErrorResponse, errorResponse, successResponse, updatedResponse, deletedResponse } = require('../utility/response')
 const { createUniqueName } = require('../utility/helper')
 const fs = require('fs')
+const categoryModel = require('../model/category.model')
+const { log } = require('console')
 
 
 async function saveFile(imageObj) {
@@ -50,12 +52,26 @@ const product = {
     },
     async read(req, res) {
         try {
+            // console.log(req.query);
+            const {categorySlug} = req.query
             const id = req.params.id
+            const filterQuery = {}
+            if(categorySlug) {
+                const category = await categoryModel.findOne({slug : categorySlug})
+                if(category) {
+                    filterQuery.categoryId = category._id
+                }
+                // console.log(category);
+                
+            }
+            // console.log(filterQuery);
+            
+            
             let product = null;
             if (id) {
                 product = await productModel.findById(id)
             } else {
-                product = await productModel.find()
+                product = await productModel.find(filterQuery)
             }
 
             if (!product) errorResponse(res, "product not found")
