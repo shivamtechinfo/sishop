@@ -1,7 +1,8 @@
+'use client'
 import Link from 'next/link'
-import React from 'react'
 
 export default function CategoryFilter({ categories }) {
+
     return (
         <div>
             <div className="bg-white p-4 rounded-xl shadow border space-y-4">

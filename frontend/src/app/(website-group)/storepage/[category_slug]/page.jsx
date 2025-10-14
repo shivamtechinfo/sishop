@@ -2,8 +2,8 @@ import ProductCard from '@/components/website-components/ProductCard'
 import { getProducts } from '@/library/api-calls'
 import React from 'react'
 
-export default async function page({params}) {
-    const productJSON = await getProducts(null, params.category_slug)
+export default async function page({params, searchParams}) {
+    const productJSON = await getProducts(null, params.category_slug, searchParams.brand ?? null)
     const products = productJSON.data
     
     return (

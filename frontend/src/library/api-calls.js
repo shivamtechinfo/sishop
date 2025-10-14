@@ -3,9 +3,9 @@ import { axiosInstance } from "./helper";
 const getCategories = async (id = null) => {
     try {
         let API = "category"
-        if(id != null) API += `/${id}`
+        if (id != null) API += `/${id}`
         // console.log(API);
-        
+
         // http://localhost:5000/category/ //yah to chal rahi broser me
         // http://localhost:5000/category/68b00eca8029bc625c33343f   //yah nahi chal rahi hai
         const response = await axiosInstance.get(API)
@@ -23,12 +23,13 @@ const getCategories = async (id = null) => {
     }
 }
 
-const getProducts = async (id = null, categorySlug = null) => {
+const getProducts = async (id = null, categorySlug = null, brandSlug = null) => {
     try {
         let API = "product"
-        if(id != null) API += `/${id}`
+        if (id != null) API += `/${id}`
         const query = new URLSearchParams()
-        if(categorySlug) query.append("categorySlug", categorySlug)
+        if (categorySlug) query.append("categorySlug", categorySlug)
+        if (brandSlug) query.append("brandSlug", brandSlug)
         const response = await axiosInstance.get(`${API}?${query.toString()}`)
         // console.log(response.data, "resp");
 
@@ -47,9 +48,9 @@ const getProducts = async (id = null, categorySlug = null) => {
 const getBrands = async (id = null) => {
     try {
         let API = "brand"
-        if(id != null) API += `/${id}`
+        if (id != null) API += `/${id}`
         // console.log(API);
-        
+
         // http://localhost:5000/category/ //yah to chal rahi broser me
         // http://localhost:5000/category/68b00eca8029bc625c33343f   //yah nahi chal rahi hai
         const response = await axiosInstance.get(API)
@@ -71,7 +72,7 @@ const getBrands = async (id = null) => {
 const getColors = async (id = null) => {
     try {
         let API = "color"
-        if(id != null) API += `/${id}`
+        if (id != null) API += `/${id}`
         const response = await axiosInstance.get(API)
         if (response.data.success) {
             return response.data

@@ -1,6 +1,20 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function BrandFilter({ brands }) {
+    const router = useRouter()
+    const [selbrand, setSalbrand] = useState(null)
+
+    useEffect(
+        () => {
+            const brand = new URLSearchParams({ brand: selbrand })
+            if (selbrand) {
+                router.push(`/storepage?${brand.toString()}`)
+            }
+        },
+        [selbrand]
+    )
     return (
         <div>
             <div className="bg-white p-4 rounded-xl shadow border space-y-4">
@@ -13,7 +27,9 @@ export default function BrandFilter({ brands }) {
                     <ul className="space-y-1 pl-3 text-gray-500">
                         {
                             brands && brands.map(brand => (
-                                <li  key={brand._id} className="cursor-pointer hover:text-black">{brand.name}</li>
+                                <li 
+                                    onClick={()=> setSalbrand(brand.slug)}
+                                key={brand._id} className="cursor-pointer hover:text-black">{brand.name}</li>
                             ))
                         }
                     </ul>

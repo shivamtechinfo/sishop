@@ -3,6 +3,7 @@ const { noContentResponse, createdResponse, serverErrorResponse, errorResponse, 
 const { createUniqueName } = require('../utility/helper')
 const fs = require('fs')
 const categoryModel = require('../model/category.model')
+const brandModel = require('../model/brand.model')
 const { log } = require('console')
 
 
@@ -53,7 +54,9 @@ const product = {
     async read(req, res) {
         try {
             // console.log(req.query);
-            const {categorySlug} = req.query
+            const {categorySlug, brandSlug} = req.query
+            console.log(categorySlug, brandSlug);
+            
             const id = req.params.id
             const filterQuery = {}
             if(categorySlug) {
@@ -62,10 +65,16 @@ const product = {
                     filterQuery.categoryId = category._id
                 }
                 // console.log(category);
-                
             }
             // console.log(filterQuery);
-            
+
+              if(brandSlug) {
+                const brand = await brandModel.findOne({slug : brandSlug})
+                if(brand) {
+                    filterQuery.brandId = brand._id
+                }
+                // console.log(category);
+            }
             
             let product = null;
             if (id) {
