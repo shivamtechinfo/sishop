@@ -4,7 +4,8 @@ import React from 'react'
 
 export default async function page({searchParams}) {
     const brand = searchParams.brand ?? null
-    const productJSON = await getProducts(null, null,  brand)
+    const color = searchParams.color ?? null
+    const productJSON = await getProducts(null, null,  brand, color)
     const products = productJSON.data
     
     return (

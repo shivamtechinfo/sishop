@@ -4,6 +4,7 @@ const { createUniqueName } = require('../utility/helper')
 const fs = require('fs')
 const categoryModel = require('../model/category.model')
 const brandModel = require('../model/brand.model')
+const colorModel = require('../model/color.model')
 const { log } = require('console')
 
 
@@ -54,8 +55,8 @@ const product = {
     async read(req, res) {
         try {
             // console.log(req.query);
-            const {categorySlug, brandSlug} = req.query
-            console.log(categorySlug, brandSlug);
+            const {categorySlug, brandSlug, colorSlug} = req.query
+            // console.log(categorySlug, brandSlug, colorSlug);
             
             const id = req.params.id
             const filterQuery = {}
@@ -76,6 +77,15 @@ const product = {
                 // console.log(category);
             }
             
+               if(colorSlug) {
+                const color = await colorModel.findOne({slug : colorSlug})
+                if(color) {
+                    filterQuery.colors = color._id
+                    //colors == colorId kyoki database me colors ke name se save hai id
+                }
+                // console.log(category);
+            }
+
             let product = null;
             if (id) {
                 product = await productModel.findById(id)

@@ -23,13 +23,14 @@ const getCategories = async (id = null) => {
     }
 }
 
-const getProducts = async (id = null, categorySlug = null, brandSlug = null) => {
+const getProducts = async (id = null, categorySlug = null, brandSlug = null, colorSlug = null) => {
     try {
         let API = "product"
         if (id != null) API += `/${id}`
         const query = new URLSearchParams()
         if (categorySlug) query.append("categorySlug", categorySlug)
         if (brandSlug) query.append("brandSlug", brandSlug)
+        if (colorSlug) query.append("colorSlug", colorSlug)
         const response = await axiosInstance.get(`${API}?${query.toString()}`)
         // console.log(response.data, "resp");
 

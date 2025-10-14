@@ -1,6 +1,21 @@
-import React from 'react'
+'use client'
+
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
 export default function ColorFilter({ colors }) {
+    const router = useRouter()
+    const [selColor, setSelColor] = useState(null)
+
+    useEffect(
+        () => {
+            const color = new URLSearchParams({ color: selColor })
+            if (selColor) {
+                router.push(`/storepage?${color.toString()}`)
+            }
+        },
+        [selColor]
+    )
     return (
         <div>
             <div className="bg-white p-4 rounded-xl shadow border space-y-4">
@@ -13,7 +28,9 @@ export default function ColorFilter({ colors }) {
                     <ul className="space-y-1  flex gap-3 pl-3 text-gray-500">
                         {
                             colors && colors.map((color) => (
-                                <li key={color._id}
+                                <li
+                                    onClick={() => setSelColor(color.slug)}
+                                    key={color._id}
                                     style={{ background: color.hexcode }}
                                     className="cursor-pointer hover:text-black w-5 h-5 rounded-4xl" ></li>
                             ))
