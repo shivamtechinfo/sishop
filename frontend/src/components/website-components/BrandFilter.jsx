@@ -10,7 +10,7 @@ export default function BrandFilter({ brands }) {
         () => {
             const brand = new URLSearchParams({ brand: selbrand })
             if (selbrand) {
-                router.push(`/storepage?${brand.toString()}`)
+                router.push(`?${brand.toString()}`)
             }
         },
         [selbrand]

@@ -4,6 +4,10 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 export default function ColorFilter({ colors }) {
+    // console.log(colors, "filter colors");
+    
+
+    
     const router = useRouter()
     const [selColor, setSelColor] = useState(null)
 
@@ -11,7 +15,7 @@ export default function ColorFilter({ colors }) {
         () => {
             const color = new URLSearchParams({ color: selColor })
             if (selColor) {
-                router.push(`/storepage?${color.toString()}`)
+                router.push(`?${color.toString()}`)
             }
         },
         [selColor]

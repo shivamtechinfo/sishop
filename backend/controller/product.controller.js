@@ -56,7 +56,7 @@ const product = {
         try {
             // console.log(req.query);
             const {categorySlug, brandSlug, colorSlug} = req.query
-            // console.log(categorySlug, brandSlug, colorSlug);
+            console.log(categorySlug, brandSlug, colorSlug, "all three");
             
             const id = req.params.id
             const filterQuery = {}
@@ -90,7 +90,7 @@ const product = {
             if (id) {
                 product = await productModel.findById(id)
             } else {
-                product = await productModel.find(filterQuery)
+                product = await productModel.find(filterQuery).populate("colors");
             }
 
             if (!product) errorResponse(res, "product not found")

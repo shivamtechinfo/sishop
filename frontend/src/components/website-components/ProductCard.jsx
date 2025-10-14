@@ -1,10 +1,12 @@
 import React from 'react'
 
-export default function ProductCard({ product}) {
-    
-    const { name, finalPrice, discountPercentage, originalPrice, thumbnail  } = product;
-    
-    
+export default function ProductCard({ product }) {
+
+    const { name, finalPrice, discountPercentage, originalPrice, thumbnail, colors } = product;
+
+    // console.log(colors, "products color");
+
+
 
     return (
         <div>
@@ -25,7 +27,7 @@ export default function ProductCard({ product}) {
                 <div className="space-y-2">
                     {/* Description */}
                     <h2 className="text-sm text-gray-700 font-medium line-clamp-2">
-                       {name}
+                        {name}
                     </h2>
 
                     {/* Price */}
@@ -36,12 +38,17 @@ export default function ProductCard({ product}) {
 
                     {/* Color Options */}
                     <div className="flex items-center gap-2">
-                        {["bg-black", "bg-red-500", "bg-blue-500", "bg-green-600"].map((color, index) => (
-                            <span
-                                key={index}
-                                className={`w-4 h-4 rounded-full border border-gray-300 ${color} cursor-pointer`}
-                            />
-                        ))}
+
+
+                        {
+
+                            colors?.map((color) => {
+                                return <span
+                                key={color._id}
+                                 style={{ background: color.hexcode }} className="w-5 h-5 rounded-full cursor-pointer border"></span>
+                            })
+                        }
+
                     </div>
                 </div>
 
