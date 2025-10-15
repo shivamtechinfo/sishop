@@ -3,7 +3,7 @@ import { getProducts } from '@/library/api-calls'
 import React from 'react'
 
 export default async function page({searchParams}) {
-    console.log(searchParams, "kya hai searchParams me");
+   await console.log(searchParams, "kya hai searchParams me");
     
     const brand = searchParams.brand ?? null
     const color = searchParams.color ?? null
