@@ -55,7 +55,7 @@ const product = {
     async read(req, res) {
         try {
             // console.log(req.query);
-            const {categorySlug, brandSlug, colorSlug} = req.query
+            const {categorySlug, brandSlug, colorSlug, min, max} = req.query
             console.log(categorySlug, brandSlug, colorSlug, "all three");
             
             const id = req.params.id
@@ -85,6 +85,14 @@ const product = {
                 }
                 // console.log(category);
             }
+
+             if(min && max) {
+                filterQuery.finalPrice={
+                    $gte: min,
+                    $lte: max
+                }
+            }
+
 
             let product = null;
             if (id) {

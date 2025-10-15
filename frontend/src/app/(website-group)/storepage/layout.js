@@ -2,6 +2,7 @@
 import CategoryFilter from "@/components/website-components/CategoryFilter";
 import BrandFilter from "@/components/website-components/BrandFilter";
 import ColorFilter from "@/components/website-components/ColorFilter";
+import PriceFilter from "@/components/website-components/PriceFilter";
 import { getBrands, getCategories, getColors } from "@/library/api-calls";
 
 export default async function RootLayout({ children }) {
@@ -123,6 +124,8 @@ export default async function RootLayout({ children }) {
                                 <BrandFilter brands={brands} />
                                 {/* Color Filter */}
                                 <ColorFilter  colors={colors}/>
+                                {/* Price Filter */}
+                                <PriceFilter />
 
                             </div>
 

@@ -3,7 +3,7 @@ import { getProducts } from '@/library/api-calls'
 import React from 'react'
 
 export default async function page({params, searchParams}) {
-    const productJSON = await getProducts(null, params.category_slug, searchParams.brand ?? null, searchParams.color ?? null)
+    const productJSON = await getProducts(null, params.category_slug, searchParams.brand ?? null, searchParams.color ?? null, searchParams,min || null, searchParams.max || null)
     const products = productJSON.data
     
     return (
