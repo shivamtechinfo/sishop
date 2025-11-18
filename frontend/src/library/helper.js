@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 const notify = (msg, flag) => toast(msg, {type: flag ? 'success' : 'error'})
 import axios from "axios";
 const axiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,  withCredentials: true
 })
 
 

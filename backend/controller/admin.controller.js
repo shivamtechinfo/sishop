@@ -7,6 +7,7 @@ const admin = {
     async login(req, res) {
         try {
             // console.log(req.body);
+             console.log("Login Request Body:", req.body);
             const { email, password } = req.body;
             const admin = await adminModel.findOne({ email: email });
             if (!admin) return errorResponse(res, "Admin not found")

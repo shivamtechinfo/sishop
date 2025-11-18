@@ -20,7 +20,7 @@ server.use('/admin', adminRouter)
 server.use(express.static('public'));
 
 server.listen(
-    5000, 
+    process.env.PORT, 
     ()=> {
         console.log('Server Running PORT 5000');
         mongoose.connect(process.env.DATABASE_URL, {dbName: "sishop"}).then(
